@@ -3,18 +3,18 @@ function! tabjqno#complete()
         return "\<C-N>"
     endif
 
-    let line = getline('.')
-    let substr = strpart(line, -1, col('.') + 1)
-    let substr = matchstr(substr, '\S*$')
+    let l:line = getline('.')
+    let l:substr = strpart(l:line, 0, col('.'))
+    let l:substr = matchstr(l:substr, '\S*$')
 
-    let only_whitespace = strlen(substr) == 0
-    if (only_whitespace)
+    let l:only_whitespace = strlen(l:substr) == 0
+    if (l:only_whitespace)
         return "\<Tab>"
     endif
 
-    let has_slash = match(substr, '\/') != -1
-    let has_html_slash = match(substr, '<\/') != -1
-    if (has_slash && !has_html_slash)
+    let l:has_slash = match(l:substr, '\/') != -1
+    let l:has_html_slash = match(l:substr, '<\/') != -1
+    if (l:has_slash && !l:has_html_slash)
         return "\<C-X>\<C-F>"
     endif
 
