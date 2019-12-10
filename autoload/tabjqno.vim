@@ -18,6 +18,10 @@ function! tabjqno#complete()
         return "\<C-X>\<C-F>"
     endif
 
+    if exists('g:did_plugin_ultisnips') && has_key(UltiSnips#SnippetsInCurrentScope(0), l:substr)
+        return "\<C-R>=UltiSnips#ExpandSnippet()\<CR>"
+    endif
+
     if exists('&omnifunc') && &omnifunc !=# ''
         return "\<C-X>\<C-O>"
     endif
