@@ -3,9 +3,7 @@ function! tabjqno#complete()
         return "\<C-N>"
     endif
 
-    let l:line = getline('.')
-    let l:substr = strpart(l:line, 0, col('.') - 1)
-    let l:substr = matchstr(l:substr, '\S*$')
+    let l:substr = tabjqno#wordtocomplete()
 
     let l:only_whitespace = strlen(l:substr) == 0
     if (l:only_whitespace)
@@ -18,8 +16,8 @@ function! tabjqno#complete()
         return "\<C-X>\<C-F>"
     endif
 
-    if exists('g:did_plugin_ultisnips') && has_key(UltiSnips#SnippetsInCurrentScope(0), l:substr)
-        return "\<C-R>=UltiSnips#ExpandSnippet()\<CR>"
+    if exists('g:did_plugin_ultisnips') && !empty(UltiSnips#SnippetsInCurrentScope(1))
+        return "\<C-R>=tabjqno#ulticomplete()\<CR>"
     endif
 
     if exists('&omnifunc') && &omnifunc !=# ''
@@ -27,5 +25,41 @@ function! tabjqno#complete()
     endif
 
     return "\<C-X>\<C-P>"
+endfunction
+
+
+function! tabjqno#ulticomplete() abort
+    " Inspired by https://github.com/SirVer/ultisnips/issues/886
+    let l:word_to_complete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
+    let l:contain_word = 'stridx(v:val, l:word_to_complete)>=0'
+    let l:candidates = map(filter(keys(g:current_ulti_dict), l:contain_word),
+        \  "{
+        \      'word': v:val,
+        \      'menu': '[snip] '. g:current_ulti_dict[v:val]['description'],
+        \      'dup' : 1,
+        \   }")
+    let l:from_where = col('.') - len(l:word_to_complete)
+    if !empty(l:candidates)
+        call complete(l:from_where, l:candidates)
+    endif
+    return ''
+endfunction
+
+function! tabjqno#accept() abort
+    return pumvisible() ? "\<C-Y>\<C-R>=tabjqno#ultiaccept()\<CR>" : "\<CR>"
+endfunction
+
+function! tabjqno#ultiaccept() abort
+    let l:wordtocomplete = tabjqno#wordtocomplete()
+    if has_key(UltiSnips#SnippetsInCurrentScope(0), l:wordtocomplete)
+        return "\<C-R>=UltiSnips#ExpandSnippet()\<CR>"
+    endif
+    return ''
+endfunction
+
+function! tabjqno#wordtocomplete() abort
+    let l:line = getline('.')
+    let l:substr = strpart(l:line, 0, col('.'))
+    return matchstr(l:substr, '\S*$')
 endfunction
 
