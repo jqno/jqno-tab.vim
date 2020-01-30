@@ -4,7 +4,7 @@ function! tabjqno#complete()
     endif
 
     let l:line = getline('.')
-    let l:substr = strpart(l:line, 0, col('.'))
+    let l:substr = strpart(l:line, 0, col('.') - 1)
     let l:substr = matchstr(l:substr, '\S*$')
 
     let l:only_whitespace = strlen(l:substr) == 0
