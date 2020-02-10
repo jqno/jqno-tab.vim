@@ -16,7 +16,7 @@ function! tabjqno#complete()
         return "\<C-X>\<C-F>"
     endif
 
-    if exists('g:did_plugin_ultisnips') && !empty(UltiSnips#SnippetsInCurrentScope(1))
+    if exists('g:did_plugin_ultisnips') && !empty(UltiSnips#SnippetsInCurrentScope(0))
         return "\<C-R>=tabjqno#ulticomplete()\<CR>"
     endif
 
