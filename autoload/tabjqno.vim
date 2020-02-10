@@ -35,7 +35,7 @@ function! tabjqno#ulticomplete() abort
     let l:candidates = map(filter(keys(g:current_ulti_dict), l:contain_word),
         \  "{
         \      'word': v:val,
-        \      'menu': '[snip] '. g:current_ulti_dict[v:val]['description'],
+        \      'menu': '[snip] '. g:current_ulti_dict[v:val],
         \      'dup' : 1,
         \   }")
     let l:from_where = col('.') - len(l:word_to_complete)
