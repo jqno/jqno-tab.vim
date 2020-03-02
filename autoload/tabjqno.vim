@@ -59,7 +59,7 @@ endfunction
 
 function! tabjqno#wordtocomplete() abort
     let l:line = getline('.')
-    let l:substr = strpart(l:line, 0, col('.'))
+    let l:substr = strpart(l:line, 0, col('.') - 1)
     return matchstr(l:substr, '\S*$')
 endfunction
 
