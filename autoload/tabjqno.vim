@@ -20,6 +20,14 @@ function! tabjqno#complete()
         return "\<C-R>=tabjqno#ulticomplete()\<CR>"
     endif
 
+    if exists('g:did_coc_loaded')
+        if coc#expandableOrJumpable()
+            return "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump', ''])\<CR>"
+        else
+            return coc#refresh()
+        endif
+    endif
+
     if exists('&omnifunc') && &omnifunc !=# ''
         return "\<C-X>\<C-O>"
     endif
