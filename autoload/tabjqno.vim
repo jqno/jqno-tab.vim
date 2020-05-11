@@ -53,6 +53,10 @@ function! tabjqno#ulticomplete() abort
     return ''
 endfunction
 
+function! tabjqno#shifttab() abort
+    return pumvisible() ? "\<C-P>" : "\<BS>"
+endfunction
+
 function! tabjqno#accept() abort
     return pumvisible() ? "\<C-Y>\<C-R>=tabjqno#ultiaccept()\<CR>" : "\<CR>"
 endfunction
