@@ -58,7 +58,7 @@ function! tabjqno#shifttab() abort
 endfunction
 
 function! tabjqno#accept() abort
-    return pumvisible() ? "\<C-Y>\<C-R>=tabjqno#ultiaccept()\<CR>" : "\<CR>"
+    return complete_info()['selected'] !=# '-1' ? "\<C-Y>\<C-R>=tabjqno#ultiaccept()\<CR>" : "\<CR>"
 endfunction
 
 function! tabjqno#ultiaccept() abort
