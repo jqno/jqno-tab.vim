@@ -58,8 +58,7 @@ function! tabjqno#accept() abort
 endfunction
 
 function! tabjqno#ultiaccept() abort
-    let l:wordtocomplete = tabjqno#wordtocomplete()
-    if has_key(UltiSnips#SnippetsInCurrentScope(0), l:wordtocomplete)
+    if exists('g:did_plugin_ultisnips') && has_key(UltiSnips#SnippetsInCurrentScope(0), tabjqno#wordtocomplete())
         return "\<C-R>=UltiSnips#ExpandSnippet()\<CR>"
     endif
     return ''
