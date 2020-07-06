@@ -21,11 +21,7 @@ function! tabjqno#complete()
     endif
 
     if exists('g:did_coc_loaded')
-        if coc#expandableOrJumpable()
-            return "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump', ''])\<CR>"
-        else
-            return coc#refresh()
-        endif
+        return coc#refresh()
     endif
 
     if exists('&omnifunc') && &omnifunc !=# ''
