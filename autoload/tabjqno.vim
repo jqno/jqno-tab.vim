@@ -31,7 +31,6 @@ function! tabjqno#complete()
     return "\<C-X>\<C-P>"
 endfunction
 
-
 function! tabjqno#ulticomplete() abort
     " Inspired by https://github.com/SirVer/ultisnips/issues/886
     let l:word_to_complete = matchstr(strpart(getline('.'), 0, col('.') - 1), '\S\+$')
